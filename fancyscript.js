@@ -3,18 +3,44 @@ ReactDOM.render(
         document.getElementById('example')
       );
 
-// var commentData = [
-//   {id: 1, author: "dude 11", varThatWillBeTheText: 'halo'},
-//   {id: 2, author: "dude 12", varThatWillBeTheText: 'halo1'},
-//   {id: 3, author: "dude 13", varThatWillBeTheText: 'halo2'}
-// ];
+
+var User = React.createClass({
+  render: function() {
+    return (
+      <div className="user">
+        <h5 className="userName"> {this.props.userName} </h5>
+        <img src={this.props.avatarUrl} height="128" width="128" />
+        <p />
+      </div>
+    );
+  }
+});
+
+var UserList = React.createClass({
+  render: function() {
+    var userNodes = this.props.data.map(function(user) {
+      return parseUser(user);
+    });
+    return (
+      <div className="userList">
+        {userNodes}
+      </div>
+    );
+  }
+});
+
+function parseUser(user) {
+  return (
+    <User id={user.id} userName={user.login} avatarUrl={user.avatar_url} />
+  )
+};
 
 var CommentBox = React.createClass({
   getInitialState: function() {
     return {data: []};
   },
   loadUsers: function() {
-    console.log('calling loadUsers', this.props.url);
+    console.log('called loadUsers', this.props.url);
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -33,47 +59,12 @@ var CommentBox = React.createClass({
   render: function() {
     return (
       <div className="commentBox">
-        <h3>Hello, world! I am a CommentBox and these are my minions</h3>
-        <CommentList data={this.state.data} />
+        <h3>Hello, here is a list of github users</h3>
+        <UserList data={this.state.data} />
       </div>
     );
   }
 });
-
-
-//building it with author as a prop, and the text as a child. This is arbitrary and I can struct the data the way i want it, right?
-
-var CommentList = React.createClass({
-  render: function() {
-    var commentNodes = this.props.data.map(function(user) {
-      return (
-        <Comment author={user.login} key={user.id}>
-          {user.avatar_url}
-        </Comment>
-      );
-    });
-    return (
-      <div className="commentList">
-        {commentNodes}
-      </div>
-    );
-  }
-});
-
-
-var Comment = React.createClass({
-  render: function() {
-    return (
-      <div className="comment">
-        <h2 className="commentAuthor">
-          {this.props.author}
-          <img src={this.props.children} height="42" width="42" />
-        </h2>
-      </div>
-    );
-  }
-});
-
 
 ReactDOM.render(
   <CommentBox url="https://api.github.com/users" />,
