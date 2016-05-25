@@ -31,7 +31,7 @@ var UserList = React.createClass({
 
 function parseUser(user) {
   return (
-    <User id={user.id} userName={user.login} avatarUrl={user.avatar_url} />
+    <User key={user.id} userName={user.login} avatarUrl={user.avatar_url} />
   )
 };
 
