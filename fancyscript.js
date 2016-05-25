@@ -3,29 +3,84 @@ ReactDOM.render(
         document.getElementById('example')
       );
 
+// var commentData = [
+//   {id: 1, author: "dude 11", varThatWillBeTheText: 'halo'},
+//   {id: 2, author: "dude 12", varThatWillBeTheText: 'halo1'},
+//   {id: 3, author: "dude 13", varThatWillBeTheText: 'halo2'}
+// ];
+
 var CommentBox = React.createClass({
+  getInitialState: function() {
+    return {data: []};
+  },
+  loadUsers: function() {
+    console.log('calling loadUsers', this.props.url);
+    $.ajax({
+      url: this.props.url,
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        this.setState({data: data});
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+  componentDidMount: function() {
+   this.loadUsers();
+  },
   render: function() {
     return (
       <div className="commentBox">
         <h3>Hello, world! I am a CommentBox and these are my minions</h3>
-        < CommentList />
-        < CommentForm />
+        <CommentList data={this.state.data} />
       </div>
     );
   }
 });
 
+
+//building it with author as a prop, and the text as a child. This is arbitrary and I can struct the data the way i want it, right?
+
 var CommentList = React.createClass({
   render: function() {
+    var commentNodes = this.props.data.map(function(user) {
+      return (
+        <Comment author={user.login} key={user.id}>
+          {user.avatar_url}
+        </Comment>
+      );
+    });
     return (
       <div className="commentList">
-        Hello, world! I am a CommentList. Here are some comments.
-        <Comment author="Pete Hunt">This is one comment</Comment>
-        <Comment author="Jordan Walke">This is *another* comment</Comment>
+        {commentNodes}
       </div>
     );
   }
 });
+
+
+var Comment = React.createClass({
+  render: function() {
+    return (
+      <div className="comment">
+        <h2 className="commentAuthor">
+          {this.props.author}
+          <img src={this.props.children} height="42" width="42" />
+        </h2>
+      </div>
+    );
+  }
+});
+
+
+ReactDOM.render(
+  <CommentBox url="https://api.github.com/users" />,
+  document.getElementById('content')
+);
+
+
 
 var CommentForm = React.createClass({
   render: function() {
@@ -36,22 +91,3 @@ var CommentForm = React.createClass({
     );
   }
 });
-
-var Comment = React.createClass({
-  render: function() {
-    return (
-      <div className="comment">
-        <h2 className="commentAuthor">
-          {this.props.author}
-        </h2>
-        {this.props.children}  //oh look, inline comments get dumped in as raw html?. hello world! <img src="http://i1.kym-cdn.com/photos/images/newsfeed/000/695/480/83a.gif" alt="obligatory dickbutt" />
-      </div>
-    );
-  }
-});
-
-
-ReactDOM.render(
-  <CommentBox />,
-  document.getElementById('content')
-);
