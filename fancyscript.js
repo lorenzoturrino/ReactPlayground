@@ -3,6 +3,7 @@ ReactDOM.render(
         document.getElementById('example')
       );
 
+///////////////////////////////////////////users///////////////////////////////////////////
 
 var User = React.createClass({
   render: function() {
@@ -35,7 +36,7 @@ function parseUser(user) {
   )
 };
 
-var CommentBox = React.createClass({
+var UserBox = React.createClass({
   getInitialState: function() {
     return {data: []};
   },
@@ -58,7 +59,7 @@ var CommentBox = React.createClass({
   },
   render: function() {
     return (
-      <div className="commentBox">
+      <div className="userBox">
         <h3>Hello, here is a list of github users</h3>
         <UserList data={this.state.data} />
       </div>
@@ -67,18 +68,44 @@ var CommentBox = React.createClass({
 });
 
 ReactDOM.render(
-  <CommentBox url="https://api.github.com/users" />,
+  <UserBox url="https://api.github.com/users" />,
   document.getElementById('content')
 );
 
-
+///////////////////////////////////////////comments///////////////////////////////////////////
 
 var CommentForm = React.createClass({
+  getInitialState: function() {
+    return {author: '', text: ''};
+  },
+  handleAuthorChange: function(e) {
+    this.setState({author: e.target.value});
+  },
+  handleTextChange: function(e) {
+    this.setState({text: e.target.value});
+  },
   render: function() {
     return (
-      <div className="commentForm">
-        Hello, world! I am a CommentForm.
-      </div>
+      <form className="commentForm">
+        <input
+          type="text"
+          placeholder="Your name"
+          value={this.state.author}
+          onChange={this.handleAuthorChange}
+        />
+        <input
+          type="text"
+          placeholder="Say something..."
+          value={this.state.text}
+          onChange={this.handleTextChange}
+        />
+        <input type="submit" value="Post" />
+      </form>
     );
   }
 });
+
+ReactDOM.render(
+  <CommentForm />,
+  document.getElementById('commentform')
+);
