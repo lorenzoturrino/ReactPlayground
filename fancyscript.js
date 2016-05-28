@@ -94,6 +94,7 @@ var CommentForm = React.createClass({
       console.log("empty input, returning!");
       return;
     }
+    this.props.onCommentSubmit({author: author, text: text});
     this.setState({author: '', text: ''});
   },
   render: function() {
@@ -116,7 +117,7 @@ var CommentForm = React.createClass({
         <input
           type="submit"
           value="Post"
-          onClick={this.handleSubmit} 
+          onClick={this.handleSubmit}
         />
       </form>
     );
