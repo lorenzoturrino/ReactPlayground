@@ -67,10 +67,12 @@ var UserBox = React.createClass({
   }
 });
 
-ReactDOM.render(
-  <UserBox url="https://api.github.com/users" />,
-  document.getElementById('content')
-);
+////uncomment to render the github profiles////
+
+// ReactDOM.render(
+//   <UserBox url="https://api.github.com/users" />,
+//   document.getElementById('content')
+// );
 
 ///////////////////////////////////////////comments///////////////////////////////////////////
 
@@ -78,15 +80,27 @@ var CommentForm = React.createClass({
   getInitialState: function() {
     return {author: '', text: ''};
   },
-  handleAuthorChange: function(e) {
-    this.setState({author: e.target.value});
+  handleAuthorChange: function(event) {
+    this.setState({author: event.target.value});
   },
-  handleTextChange: function(e) {
-    this.setState({text: e.target.value});
+  handleTextChange: function(event) {
+    this.setState({text: event.target.value});
+  },
+  handleSubmit: function(event) {
+    event.preventDefault();
+    var author = this.state.author.trim();
+    var text = this.state.text.trim();
+    if (!text || !author) {
+      console.log("empty input, returning!");
+      return;
+    }
+    this.setState({author: '', text: ''});
   },
   render: function() {
     return (
       <form className="commentForm">
+        hello {this.state.author} how are you?
+        <p />
         <input
           type="text"
           placeholder="Your name"
@@ -99,7 +113,11 @@ var CommentForm = React.createClass({
           value={this.state.text}
           onChange={this.handleTextChange}
         />
-        <input type="submit" value="Post" />
+        <input
+          type="submit"
+          value="Post"
+          onClick={this.handleSubmit} 
+        />
       </form>
     );
   }
