@@ -1,7 +1,28 @@
+var Cell = React.createClass({
+  getInitialState: function() {
+    return {alive: "dead"};
+  },
+  render: function() {
+    console.log("rendering", this.state);
+    return (
+      <td className={this.state.alive}>
+        Greetings
+      </td>
+    )
+  }
+});
+
 ReactDOM.render(
-        <h1>Hello, world!</h1>,
-        document.getElementById('example')
-      );
+  <table className="mainGrid">
+    <thead></thead>
+    <tbody>
+      <tr>
+        <Cell />
+      </tr>
+    </tbody>
+  </table>,
+  document.getElementById('hook')
+);
 
 ///////////////////////////////////////////users///////////////////////////////////////////
 

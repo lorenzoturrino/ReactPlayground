@@ -11,9 +11,26 @@
     <script src="bower_components/react/react-dom.js"></script>
     <script src="bower_components/babel/browser.js"></script>
     <script type="text/babel" src="fancyscript.js"></script>
+
+    <style>
+    table, th, td {
+      border: 1px solid;
+      border-collapse: collapse;
+    }
+
+    .dead {
+      background-color: darkred;
+    }
+
+    .alive {
+      background-color: lime;
+    }
+
+    </style>
+    
   </head>
   <body>
-    <div id="example"></div>
+    <div id="hook"></div>
     <div id="commentform"></div>
     <div id="commentlist"></div>
     <div id="content"></div>
