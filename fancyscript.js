@@ -20,12 +20,39 @@ var Cell = React.createClass({
   }
 });
 
+
+var cellStyle = {
+  backgroundColor: 'cyan'
+}
+
+var SecondCell = React.createClass({
+  getInitialState: function() {
+    return {style: {backgroundColor: 'yellow'}}
+  },
+  handleClick: function() {
+    if(this.state.style.backgroundColor === 'yellow') {
+      this.setState({style: {backgroundColor: 'cyan'}});
+    } else {
+      this.setState({style: {backgroundColor: 'yellow'}});
+    }
+    console.log(this.props, this.state, this);
+  },
+  render: function() {
+    return (
+      <td style={this.state.style} onClick={this.handleClick}>
+        Inlineguy
+      </td>
+    )
+  }
+});
+
 ReactDOM.render(
   <table className="mainGrid">
     <thead></thead>
     <tbody>
       <tr>
         <Cell />
+        <SecondCell />
       </tr>
     </tbody>
   </table>,
