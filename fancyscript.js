@@ -2,10 +2,18 @@ var Cell = React.createClass({
   getInitialState: function() {
     return {alive: "dead"};
   },
+  handleClick: function() {
+    console.log("click");
+    if(this.state.alive === 'dead') {
+      this.setState({alive: 'alive'});
+    } else {
+      this.setState({alive: 'dead'});
+    }
+  },
   render: function() {
     console.log("rendering", this.state);
     return (
-      <td className={this.state.alive}>
+      <td className={this.state.alive} onClick={this.handleClick}>
         Greetings
       </td>
     )
