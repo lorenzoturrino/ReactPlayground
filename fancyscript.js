@@ -16,18 +16,13 @@ var Cell = React.createClass({
       <td className={this.state.alive} onClick={this.handleClick}>
         Greetings
       </td>
-    )
+    );
   }
 });
 
-
-var cellStyle = {
-  backgroundColor: 'cyan'
-}
-
 var SecondCell = React.createClass({
   getInitialState: function() {
-    return {style: {backgroundColor: 'yellow'}}
+    return {style: {backgroundColor: 'yellow'}};
   },
   handleClick: function() {
     if(this.state.style.backgroundColor === 'yellow') {
@@ -42,9 +37,27 @@ var SecondCell = React.createClass({
       <td style={this.state.style} onClick={this.handleClick}>
         Inlineguy
       </td>
+    );
+  }
+});
+
+var ThirdCell = React.createClass({
+  getInitialState: function() {
+    return {alive: false};
+  },
+  handleClick: function() {
+    this.setState({alive: !this.state.alive});
+    console.log(this.state);
+  },
+  render: function() {
+    return (
+      <td data-alive={this.state.alive} onClick={this.handleClick}>
+        customAttribute
+      </td>
     )
   }
 });
+
 
 ReactDOM.render(
   <table className="mainGrid">
@@ -53,6 +66,7 @@ ReactDOM.render(
       <tr>
         <Cell />
         <SecondCell />
+        <ThirdCell />
       </tr>
     </tbody>
   </table>,
