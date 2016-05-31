@@ -73,6 +73,47 @@ ReactDOM.render(
   document.getElementById('hook')
 );
 
+
+var CloneCell = React.createClass({
+  handleClick: function() {
+    this.props.callb();
+  },
+  render: function() {
+  return <td data-alive={this.props.viva} onClick={this.handleClick}>cell proto</td>;
+  }
+});
+
+var CloneGrid = React.createClass({
+  getInitialState: function() {
+    return {alive: true};
+  },
+  switchState: function () {
+    this.setState({alive: !this.state.alive});
+  },
+  render: function() {
+    return (
+      <td>
+        <CloneCell viva={this.state.alive} callb={this.switchState}/>
+      </td>
+    );
+  }
+});
+
+console.log(CloneGrid.getInitialState);
+console.log(<CloneGrid />.getInitialState);
+
+
+ReactDOM.render(
+  <table className="secondGrind">
+    <thead></thead>
+    <tbody>
+        <CloneGrid />
+    </tbody>
+  </table>,
+  document.getElementById('experiment')
+);
+
+
 ///////////////////////////////////////////users///////////////////////////////////////////
 
 var User = React.createClass({
